@@ -1,0 +1,78 @@
+library = {}
+
+def add_book():
+    book_title = input("Enter the title of the book: ")
+    book_author = input("Enter the author of the book: ")
+    book_isbn = input("Enter the ISBN of the book: ")
+    library[book_title] = {"author": book_author, "isbn": book_isbn, "status": "available"}
+
+def remove_book():
+    book_title = input("Enter the title of the book you want to remove: ")
+    if book_title in library:
+        del library[book_title]
+        print(f"'{book_title}' has been removed from the library.")
+    else:
+        print(f"'{book_title}' is not in the library.")
+
+def list_books():
+    if not library:
+        print("There are no books in the library.")
+    else:
+        print("Here are all the books in the library:")
+        for title, book_info in library.items():
+            author = book_info["author"]
+            isbn = book_info["isbn"]
+            status = book_info["status"]
+            print(f"{title} by {author} (ISBN: {isbn}, status: {status})")
+
+def check_out_book():
+    book_title = input("Enter the title of the book you want to check out: ")
+    if book_title in library:
+        if library[book_title]["status"] == "available":
+            library[book_title]["status"] = "checked out"
+            print(f"'{book_title}' has been checked out.")
+        else:
+            print(f"'{book_title}' is already checked out.")
+    else:
+        print(f"'{book_title}' is not in the library.")
+
+def check_in_book():
+    book_title = input("Enter the title of the book you want to check in: ")
+    if book_title in library:
+        if library[book_title]["status"] == "checked out":
+            library[book_title]["status"] = "available"
+            print(f"'{book_title}' has been checked in.")
+        else:
+            print(f"'{book_title}' is not currently checked out.")
+    else:
+        print(f"'{book_title}' is not in the library.")
+
+while True:
+    print("""
+    Library Management System Menu
+    ------------------------------
+    1. Add a book
+    2. Remove a book
+    3. List all books
+    4. Check out a book
+    5. Check in a book
+    6. Quit
+    """)
+
+    choice = input("Enter your choice (1-6): ")
+    
+    if choice == "1":
+        add_book()
+    elif choice == "2":
+        remove_book()
+    elif choice == "3":
+        list_books()
+    elif choice == "4":
+        check_out_book()
+    elif choice == "5":
+        check_in_book()
+    elif choice == "6":
+        print("Goodbye!")
+        break
+    else:
+        print("Invalid choice. Please try again.")
